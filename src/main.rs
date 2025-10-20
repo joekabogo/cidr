@@ -52,3 +52,17 @@ fn main() {
         None => println!("Invalid CIDR format"),
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_cidr_to_range() {
+        let result = cidr_to_range("192.168.0.0/24");
+        assert!(result.is_some());
+        let (start, end, broadcast) = result.unwrap();
+        assert_eq!(start.to_string(), "192.168.0.0");
+        assert_eq!(end.to_string(), "192.168.0.255");
+        assert_eq!(broadcast.to_string(), "192.168.0.255");
+    }
+}
